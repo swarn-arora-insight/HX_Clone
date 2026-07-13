@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap');
+
+:root {
+    --font-sans: "Geist", "Geist Fallback", sans-serif;
+    --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+}
+
+body {
+    font-family: var(--font-sans);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-primary {
+    color: #0D6EFD !important;
+}

@@ -1,0 +1,151 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.9)" size="medium" color="#71B0D9" type="ball-spin-fade">
+    <p class="mt-3 fw-semibold text-primary">Processing....</p>
+</ngx-spinner>
+<app-header></app-header>
+
+<div class="parent">
+    <div class="content">
+        <div class="page-bg py-3">
+            <div class="mx-4">
+                <div class="card shadow-lg p-4 rounded-4 border-0">
+                    <div class="d-flex justify-content-between align-items-center" (click)="togglePanel()"
+                        style="cursor: pointer;">
+                        <div>
+                            <h4 class="fw-bold text-primary mb-1">Search Filters</h4>
+                            <p class="text-muted mb-0">Refine your search to discover agents that match your travel
+                                preferences</p>
+                        </div>
+                        <i class="bi" [ngClass]="isExpanded ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                    </div>
+
+                    <div class="mt-4" *ngIf="isExpanded" [@expandCollapse]>
+                        <div class="row g-4">
+
+
+                            <div class="col-md-6" *ngFor="let filter of filters">
+                                <div class="d-flex align-items-center mb-1">
+                                    <label class="form-label fw-semibold me-2 mb-0">{{ filter.name }}</label>
+                                    <i class="bi bi-info-circle text-secondary" [attr.title]="filter.description"></i>
+                                </div>
+
+                                <ng-select [items]="filter.options" bindLabel="value" bindValue="key"
+                                    [(ngModel)]="selectedFilters[filter.name]" [multiple]="true" [closeOnSelect]="false"
+                                    [searchable]="true" [clearable]="false" placeholder="Select {{ filter.name }}"
+                                    class="custom-select"></ng-select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-end gap-3">
+                            <button class="btn btn-primary btn-sm px-4 shadow-sm action-btn" (click)="applyFilters()">
+                                <i class="bi bi-funnel me-2"></i>Apply Filters
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary px-4 shadow-sm clear_btn"
+                                (click)="clearFilters()">
+                                <i class="bi bi-x-circle me-2"></i>Clear Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 🌟 Result Section -->
+                <div #resultSection *ngIf="filterCount?.agent_count !== null"
+                    class="result-section mt-4 p-4 rounded-4 text-center shadow-lg animate__animated animate__fadeInUp d-none">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold text-primary mb-0">Agents Found</h4>
+                    </div>
+
+                    <!-- ✅ Selected Filters Section -->
+                    <div *ngIf="appliedFilters && objectKeys(appliedFilters).length > 0"
+                        class="mt-3 p-3 border rounded-3 bg-white text-start">
+
+                        <h6 class="fw-semibold text-secondary mb-2">Applied Filters</h6>
+
+                        <div class="d-flex flex-wrap">
+                            <div *ngFor="let key of objectKeys(appliedFilters)">
+                                <ng-container *ngIf="shouldDisplayFilter(key)">
+                                    <div class="me-4 mb-2">
+                                        <strong class="text-dark">{{ key.replace('_', ' ') }} : </strong>
+                                        <span class="text-muted">{{ getFilterDisplayValues(key).join(', ') }}</span>
+
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="count-row d-flex justify-content-between align-items-stretch flex-wrap mt-3">
+
+                        <div *ngIf="filterCount?.agent_count !== null" class="count-box-wrapper flex-fill">
+                            <div (click)="getAgentDetails('Overall')"
+                                class="cursor-pointer count-box p-3 rounded-4 shadow-sm bg-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h3 class="text-secondary fw-bold mb-2">Overall</h3>
+                                <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0 transition-number">
+                                    {{ animatedValues.agent_count }}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filterCount?.hx_transaction !== null" class="count-box-wrapper flex-fill">
+                            <div (click)="getAgentDetails('HX Transaction')"
+                                class="cursor-pointer count-box p-3 rounded-4 shadow-sm bg-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h4 class="text-secondary fw-bold mb-2">HX Transaction</h4>
+                                <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0 transition-number">
+                                    {{ animatedValues.hx_transaction }}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filterCount?.hx_transaction_revenue !== null" class="count-box-wrapper flex-fill">
+                            <div (click)="getAgentDetails('HX Transaction (Revenue > 0)')"
+                                class="cursor-pointer count-box p-3 rounded-4 shadow-sm bg-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h4 class="text-secondary fw-bold mb-2 text-center">HX Transaction<br>(Revenue > 0)</h4>
+                                <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0 transition-number">
+                                    {{ animatedValues.hx_transaction_revenue }}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filterCount?.hx_contact !== null" class="count-box-wrapper flex-fill">
+                            <div (click)="getAgentDetails('HX Contact')"
+                                class="cursor-pointer count-box p-3 rounded-4 shadow-sm bg-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h4 class="text-secondary fw-bold mb-2">HX Contact</h4>
+                                <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0 transition-number">
+                                    {{ animatedValues.hx_contact }}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filterCount?.not_in_hx_contact !== null" class="count-box-wrapper flex-fill">
+                            <div (click)="getAgentDetails('Not in HX Contact')"
+                                class="cursor-pointer count-box p-3 rounded-4 shadow-sm bg-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h4 class="text-secondary fw-bold mb-2">Not in HX Contact</h4>
+                                <h2 class="display-6 fw-bold text_agent cursor-pointer mb-0 transition-number">
+                                    {{ animatedValues.not_in_hx_contact }}
+                                </h2>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- <p class="text-muted mt-4">based on your selected filters</p> -->
+                </div>
+
+
+
+                <!-- Agents Details table -->
+                <div #agentDetailsSection *ngIf="showTable"
+                    class="mt-4 shadow-lg p-4 rounded-4 bg-white animate__animated animate__fadeInUp table">
+                    <app-agent-table [columns]="columns" [data]="agents"
+                        [selectedFilters]="selectedFilters"></app-agent-table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

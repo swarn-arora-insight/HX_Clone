@@ -1,0 +1,81 @@
+<div class="email-history-backdrop">
+    <div class="email-history-container">
+
+        <!-- HEADER -->
+        <div class="header">Email History with <strong>{{agent.Name}}</strong> </div>
+
+        <!-- SCROLLABLE BODY -->
+        <div class="email-scroll">
+
+            <div *ngFor="let mail of emails; let i=index" class="timeline-item">
+
+                <!-- STRIP (TITLE) - Hidden when expanded -->
+                <div class="email-strip" (click)="mail.open = !mail.open" *ngIf="!mail.open">
+                    <div class="strip-header">
+                        <div class="email-field from-field">
+                            <span class="label">From:</span>
+                            <span class="value">{{mail.sender_email}}</span>
+                        </div>
+                        <div class="email-field to-field">
+                            <span class="label">To:</span>
+                            <span class="value">{{mail.recipient}}</span>
+                        </div>
+                        <div class="email-field subject-field">
+                            <span class="label">Subject:</span>
+                            <span class="value">{{mail.subject}}</span>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="strip-arrow">
+                        <span class="arrow-icon" [innerHTML]="mail.open ? '▲' : '▼'"></span>
+                    </div>
+                </div>
+
+                <!-- EXPANDED BODY - Full width when expanded -->
+                <div *ngIf="mail.open" class="email-body-expanded">
+                    <!-- Header with close button - entire header is clickable -->
+                    <div class="expanded-header" (click)="mail.open = false">
+                        <div class="expanded-title">Email Details</div>
+                        <div class="btn-close-expanded">
+                            <span class="arrow-icon">▲</span>
+                        </div>
+                    </div>
+
+                    <!-- Email metadata -->
+                    <div class="email-meta">
+                        <div class="meta-row">
+                            <span class="meta-label">From:</span>
+                            <span class="meta-value">{{mail.sender_email}}</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-label">To:</span>
+                            <span class="meta-value">{{mail.recipient}}</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-label">Subject:</span>
+                            <span class="meta-value">{{mail.subject}}</span>
+                        </div>
+                        <div class="meta-row" *ngIf="mail.date">
+                            <span class="meta-label">Date:</span>
+                            <span class="meta-value">{{mail.date}}</span>
+                        </div>
+                    </div>
+
+                    <!-- Message content -->
+                    <div class="message-content">
+                        <pre>{{mail.message}}</pre>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer text-end p-3">
+            <button class="btn btn-primary" (click)="closePopup()">Close</button>
+        </div>
+
+    </div>
+</div>

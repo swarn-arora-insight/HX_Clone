@@ -1,0 +1,146 @@
+<div class="modal fade show d-block custom-backdrop" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow-lg popup-gradient">
+
+            <!-- HEADER -->
+            <div class="modal-header border-0 py-3 popup-header">
+                <div>
+                    <h4 class="fw-bold d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-envelope-paper text-primary fs-3"></i>
+                        Received Email
+                    </h4>
+                    <p class="small m-0">Read and reply</p>
+                </div>
+
+                <button type="button" class="btn-close" (click)="closePopup()"></button>
+            </div>
+
+            <!-- MAIN TABS (UPDATED EXACTLY LIKE REFERENCE UI) -->
+            <div class="px-3 pt-3 d-flex gap-2">
+
+                <!-- RECEIVED TAB -->
+                <button class="btn flex-fill py-2 fw-semibold custom-tab" [ngClass]="{
+                        'tab-active': mainTab === 'received',
+                        'btn-outline-secondary': mainTab !== 'received'
+                    }" (click)="mainTab = 'received'">
+
+                    <i class="bi bi-envelope-open me-1"></i> Received Email
+                </button>
+
+                <!-- REPLY TAB -->
+                <button class="btn flex-fill py-2 fw-semibold custom-tab" [ngClass]="{
+                        'tab-active': mainTab === 'reply',
+                        'btn-outline-secondary': mainTab !== 'reply'
+                    }" (click)="switchToReply()">
+
+                    <i class="bi bi-reply-fill me-1"></i> Reply
+                </button>
+
+            </div>
+
+
+            <div class="modal-body popup-body-scroll">
+
+                <!-- RECEIVED EMAIL VIEW -->
+                <div *ngIf="mainTab === 'received'" class="animate__animated animate__fadeIn">
+                    <div class="bg-white border rounded-4 shadow-sm p-4">
+                        <h5 class="fw-bold mb-3">{{ subject }}</h5>
+
+                        <p class="small"><strong>From:</strong> {{ sender }}</p>
+                        <!-- <p class="small"><strong>To:</strong> {{ recipient }}</p> -->
+
+                        <hr>
+
+                        <div class="white-pre mt-2">{{ message }}</div>
+                    </div>
+                </div>
+
+                <!-- REPLY SECTION -->
+                <div *ngIf="mainTab === 'reply'" class="animate__animated animate__fadeIn">
+
+                    <!-- INNER TABS (UPDATED LIKE REFERENCE UI) -->
+                    <div class="d-flex gap-2 mb-3">
+
+                        <!-- EDIT TAB -->
+                        <button class="btn flex-fill py-2 fw-semibold custom-tab" [ngClass]="{
+                                'tab-active': replyTab === 'edit',
+                                'btn-outline-secondary': replyTab !== 'edit'
+                            }" (click)="setReplyTab('edit')">
+
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </button>
+
+                        <!-- PREVIEW TAB -->
+                        <button class="btn flex-fill py-2 fw-semibold custom-tab" [ngClass]="{
+                                'tab-active': replyTab === 'preview',
+                                'btn-outline-secondary': replyTab !== 'preview'
+                            }" (click)="setReplyTab('preview')">
+
+                            <i class="bi bi-eye me-1"></i> Preview
+                        </button>
+
+                    </div>
+
+
+                    <!-- EDIT MODE -->
+                    <div *ngIf="replyTab === 'edit'" class="px-1">
+                        <label class="fw-semibold">Replying To</label>
+                        <input type="text" class="form-control mb-3" [value]="sender" disabled>
+
+                        <label class="fw-semibold">Subject</label>
+                        <input type="text" class="form-control mb-3" [(ngModel)]="replySubject">
+
+                        <label class="fw-semibold">Message</label>
+                        <textarea rows="8" class="form-control" [(ngModel)]="replyMessage"></textarea>
+                    </div>
+
+                    <!-- PREVIEW MODE -->
+                    <div *ngIf="replyTab === 'preview'" class="px-1">
+                        <div class="bg-white border rounded-4 shadow-sm p-4">
+
+                            <h5 class="fw-semibold">{{ replySubject }}</h5>
+
+                            <p class="small"><strong>To:</strong> {{ recipient }}</p>
+                            <p class="small"><strong>From:</strong> {{ yourEmail }}</p>
+
+                            <hr>
+
+                            <div class="white-pre mt-2">{{ replyMessage }}</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer border-0 d-flex justify-content-between popup-footer">
+
+                <button class="btn btn-light px-4 shadow-sm rounded-3" (click)="closePopup()">
+                    Close
+                </button>
+
+                <!-- RECEIVED TAB FOOTER BUTTON -->
+                <button *ngIf="mainTab === 'received'" class="btn btn-primary px-4 shadow-sm rounded-3"
+                    (click)="switchToReply()">
+                    <i class="bi bi-reply-fill"></i> Reply
+                </button>
+
+                <!-- EDIT → PREVIEW BUTTON -->
+                <button *ngIf="mainTab === 'reply' && replyTab === 'edit'"
+                    class="btn btn-primary px-4 shadow-sm rounded-3" (click)="setReplyTab('preview')">
+                    <i class="bi bi-eye"></i> Preview
+                </button>
+
+                <!-- PREVIEW → REPLY FINAL BUTTON -->
+                <button *ngIf="mainTab === 'reply' && replyTab === 'preview'"
+                    class="btn btn-primary px-4 shadow-sm rounded-3" (click)="replyEmail()">
+                    <i class="bi bi-reply-fill"></i> Reply
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

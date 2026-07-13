@@ -1,0 +1,57 @@
+<div class="full-bg d-flex justify-content-end align-items-center min-vh-100">
+    <div class="login-card mx-5 p-4 p-md-5 shadow">
+        <div class="text-center mb-4">
+            <img src="logo_right.png" alt="Travel Logo" class="login-logo mb-2" width="110" height="65" />
+            <h3 class="fw-bold mb-1 text-primary"> Agent Prioritization Dashboard</h3>
+            <p class="mb-0 fw-bold text-secondary">Login</p>
+        </div>
+
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+            <!-- USername -->
+            <div class="mb-3">
+                <label for="agentUsername" class="form-label">
+                    Username <span class="text-danger">*</span>
+                </label>
+                <input type="text" id="agentUsername" name="username" [(ngModel)]="loginData.username"
+                    #username="ngModel" class="form-control rounded" placeholder="Enter your username" required
+                    username />
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger small mt-1">
+                    <div *ngIf="username.errors?.['required']">Username is required.</div>
+                    <div *ngIf="username.errors?.['username']">Please enter a valid username.</div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="agentPassword" class="form-label">
+                    Password <span class="text-danger">*</span>
+                </label>
+                <input type="password" id="agentPassword" name="password" [(ngModel)]="loginData.password"
+                    #password="ngModel" class="form-control rounded" placeholder="Enter your password" required
+                    minlength="6" />
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger small mt-1">
+                    <div *ngIf="password.errors?.['required']">Password is required.</div>
+                    <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="btn btn-primary w-100 rounded-pill py-2 fw-semibold mt-4 d-flex align-items-center justify-content-center gap-2"
+                [disabled]="loading">
+                <span *ngIf="!loading">
+                    <i class="bi bi-box-arrow-in-right me-2 fs-5 fw-bold"></i> <!-- Bootstrap Icon -->
+                    Login
+                </span>
+                <span *ngIf="loading">
+                    <span class="spinner-border spinner-border-sm me-2"></span>Logging in...
+                </span>
+            </button>
+
+            <!-- Error Message -->
+            <!-- <div *ngIf="loginError" class="text-danger text-center mt-3 small fw-semibold">
+                {{ loginError }}
+            </div> -->
+        </form>
+    </div>
+</div>

@@ -1,0 +1,236 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.9)" size="medium" color="#71B0D9" type="ball-spin-fade">
+    <p class="mt-3 fw-semibold text-primary">Processing....</p>
+</ngx-spinner>
+
+<div class="card shadow-lg border-0 rounded-4 p-4 animate__animated animate__fadeInUp mt-3">
+
+    <div class="d-flex align-items-center justify-content-between mb-1">
+        <h4 class="fw-semibold text-primary m-0">Shortlisted Agents</h4>
+
+        <div class="d-flex align-items-center gap-2">
+
+            <!-- 🔍 SEARCH BOX -->
+            <input type="text" class="form-control form-control-sm py-2" placeholder="Search..." style="width: 260px;"
+                [(ngModel)]="searchTerm" (input)="filterShortlisted()">
+
+            <button class="btn btn-outline-primary " (click)="clearShortlist()">
+                <i class="bi bi-trash3 me-1"></i> Clear All
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive shortlisted-table mt-3">
+
+        <table class="table table-hover table-bordered align-middle mb-0 text-start">
+            <thead class="table-light" *ngIf="shortlistedData.length">
+                <tr>
+                    <th class="fw-semibold text-secondary border-end text-start">#</th>
+                    <!-- ABOUT COLUMN -->
+                    <th class="fw-semibold text-secondary border-end text-start about_col">
+                        About
+                    </th>
+
+                    <!-- 🔽 SORTABLE HEADERS (REFERENCE STYLE USED) -->
+                    <th *ngFor="let col of shortlistedColumns" class="fw-semibold text-secondary border-end text-start"
+                        style="cursor: pointer;" (click)="sortColumn(col)">
+
+                        <div class="d-flex align-items-center justify-content-start">
+                            <span>{{ col }}</span>
+
+                            <i class="ms-2 sort-icon" [ngClass]="{
+                                    'bi bi-arrow-up': sortedColumn === col && sortDirection === 'asc',
+                                    'bi bi-arrow-down': sortedColumn === col && sortDirection === 'desc',
+                                    'bi bi-arrow-down-up text-muted': sortedColumn !== col
+                                }">
+                            </i>
+                        </div>
+                    </th>
+
+                    <th class="fw-semibold border-end text-end actions_p">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of shortlistedData; let i = index">
+                    <td class="align-middle border-end">{{ i + 1 }}</td>
+                    <td class="align-middle text-center border-end about_col">
+                        <button class="btn btn-light px-2 py-1 shadow-sm rounded-3" (click)="openAboutMe(item)"
+                            title="About User">
+                            <i class="bi bi-person-lines-fill text-primary"></i>
+                        </button>
+                    </td>
+
+                    <!-- DYNAMIC COLUMNS -->
+                    <td *ngFor="let col of shortlistedColumns" class="align-middle border-end">
+
+                        <!-- STATUS COLUMN -->
+                        <ng-container *ngIf="col.toLowerCase() === 'status'; else normalCell">
+
+                            <span *ngIf="item[col] === 'Pending'"
+                                class="badge border pending_css rounded-pill px-3 py-2">
+                                <i class="bi bi-clock-history me-1"></i> Pending
+                            </span>
+
+                            <span *ngIf="item[col] === 'Received'"
+                                class="badge bg-primary-subtle text-primary border border-primary rounded-pill px-3 py-2 me-2">
+                                <i class="bi bi-clock-history me-1"></i> Received
+                            </span>
+
+                            <!-- <i *ngIf="item[col] === 'Received'" class="bi bi-eye-fill text-primary fs-5"
+                                style="cursor: pointer;" title="View Details" (click)="openRecivedEmailPopup()">
+                            </i> -->
+
+
+                            <span *ngIf="item[col] === 'Sent'"
+                                class="badge bg-success-subtle text-success border border-success rounded-pill px-3 py-1">
+                                <i class="bi bi-send-fill me-1"></i> Sent
+                            </span>
+
+                        </ng-container>
+
+                        <ng-template #normalCell>
+                            {{ item[col] }}
+                        </ng-template>
+
+                    </td>
+
+                    <!-- ACTIONS COLUMN -->
+                    <td class="align-middle border-end text-end">
+                        <div class="d-inline-flex align-items-center gap-2">
+                            <!-- EMAIL BUTTON + DROPDOWN -->
+                            <div *ngIf="item.Status !== 'Received'; else replyDropdown">
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-primary px-3 py-1 fw-semibold shadow-sm d-flex align-items-center gap-2"
+                                        type="button" data-bs-toggle="dropdown">
+
+                                        <i class="bi bi-envelope-fill fs-6"></i>
+                                        Send Email
+                                        <i class="bi bi-chevron-down fs-6"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-menu-end shadow rounded-3 p-2">
+                                        <li *ngFor="let template of emailTemplates" class="cursor-pointer">
+                                            <a class="dropdown-item d-flex align-items-center gap-2 border-bottom py-2"
+                                                (click)="handleTemplateClick(item, template)">
+                                                <i class="bi bi-file-text text-primary fs-6"></i>
+                                                {{ template }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- REPLY TEMPLATES -->
+                            <ng-template #replyDropdown>
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-primary px-3 py-1 fw-semibold shadow-sm d-flex align-items-center gap-2"
+                                        type="button" data-bs-toggle="dropdown">
+
+                                        <i class="bi bi-reply-fill fs-6"></i>
+                                        Reply
+                                        <i class="bi bi-chevron-down fs-6"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-menu-end shadow rounded-3 p-2">
+                                        <li *ngFor="let template of replyTemplates" class="cursor-pointer">
+                                            <a class="dropdown-item d-flex align-items-center gap-2 border-bottom py-2"
+                                                (click)="handleTemplateClick(item, template)">
+                                                <i class="bi bi-chat-left-quote-fill text-primary fs-6"></i>
+                                                {{ template}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ng-template>
+
+                            <!-- DELETE ICON -->
+                            <i class="bi bi-trash-fill text-danger fs-5 ms-2" style="cursor: pointer;"
+                                title="Remove from shortlist" (click)="beforeDelete(item)">
+                            </i>
+
+                            <!-- EMAIL HISTORY ICON -->
+                            <i class="bi bi-clock-history text-primary fs-5 ms-2 email-history-icon"
+                                title="View Email History" (click)="openEmailHistory(item)">
+                            </i>
+
+
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="!shortlistedData.length" class="no-data text-center py-4">
+            <i class="bi bi-exclamation-circle text-secondary fs-4"></i>
+            <p class="mt-2 text-muted mb-0">No shortlisted agents yet.</p>
+        </div>
+
+    </div>
+</div>
+
+<app-email-template-popup *ngIf="showEmailPopup" [agent]="selectedAgent" [template]="selectedTemplate"
+    (close)="showEmailPopup = false">
+</app-email-template-popup>
+
+<app-received-email-popup *ngIf="showRecivedEmailPopup" [agent]="selectedAgent" [template]="selectedTemplate"
+    [recivedEmail]="receivedDetails" (close)="showRecivedEmailPopup = false"></app-received-email-popup>
+
+<app-email-history-popup *ngIf="showEmailHistoryPopup" [agent]="selectedAgent" [emails]="selectedEmailHistory"
+    (close)="showEmailHistoryPopup = false">
+</app-email-history-popup>
+
+
+
+<!-- DELETE CONFIRM POPUP -->
+<div class="modal fade" tabindex="-1" [ngClass]="{ 'show d-block': showDeletePopup }">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow-lg">
+            <div class="modal-body text-center p-4">
+                <p class="fs-5">
+                    Are you sure you want to delete <span class="fw-semibold text-primary">{{ deleteAgent?.Name
+                        }}</span> from
+                    shortlist?
+                </p>
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button class="btn btn-secondary px-4 rounded-pill" (click)="closePopup()">No</button>
+                    <button class="btn btn-primary px-4 rounded-pill" (click)="confirmDelete()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showDeletePopup" class="modal-backdrop fade show"></div>
+
+
+
+<!-- ABOUT ME POPUP -->
+<div class="custom-backdrop" *ngIf="showAboutPopup">
+    <div class="about-card animate__animated animate__fadeInDown">
+
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+            <h5 class="fw-bold text-primary mb-0">About {{aboutAgent.Name}}</h5>
+            <i class="bi bi-x-lg close-icon cursor-pointer" (click)="closeAboutMe()"></i>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="mt-3">
+            <h6 class="fw-semibold text-dark" *ngIf="aboutSummary.length > 0">Profile Summary</h6>
+
+            <ul class="about-list" *ngIf="aboutSummary.length > 0">
+                <li *ngFor="let point of aboutSummary">
+                    <i class="bi bi-dot text-primary fs-4"></i> {{ point }}
+                </li>
+            </ul>
+            <div *ngIf="aboutSummary.length === 0" class="text-center py-2">
+                <h5 class="fw-bold text-secondary mb-0">Profile Summary Not Found</h5>
+            </div>
+
+        </div>
+
+    </div>
+</div>

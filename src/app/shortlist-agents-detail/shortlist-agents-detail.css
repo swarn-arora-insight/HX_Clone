@@ -1,0 +1,133 @@
+.btn-outline-primary {
+    color: #2E3D66;
+    border: 1px solid #2E3D66;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #2E3D66;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.pending_css {
+    color: #2E3D66;
+    border: 1pc solid #2E3D66;
+    background: #c1cff6;
+}
+
+th:hover {
+    background-color: #f8f9fa;
+    transition: 0.2s;
+}
+
+input.form-control {
+    border-radius: 10px;
+}
+
+td {
+    color: #353131 !important;
+    font-size: medium;
+}
+
+
+
+
+.no-data {
+    background: #f8faff;
+    border-top: 1px solid #d9e3f3;
+    color: #2E3D66;
+    font-size: 0.95rem;
+}
+
+.bi-trash-fill {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.bi-trash-fill:hover {
+    transform: scale(1.1);
+    color: #b91c1c;
+}
+
+.actions_p {
+    padding-right: 5rem;
+}
+
+.shortlisted-table {
+    position: relative;
+    overflow: visible !important;
+}
+
+.summary-card,
+.card {
+    overflow: visible !important;
+}
+
+.dropdown-menu {
+    z-index: 9999 !important;
+}
+
+.email-history-icon {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.email-history-icon:hover {
+    transform: scale(1.15);
+    color: #4f6dc0 !important;
+}
+
+.about_col {
+    width: 80px !important;
+    max-width: 80px !important;
+    text-align: center;
+}
+
+.about_btn {
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-card {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    animation-duration: 0.4s;
+}
+
+.about-list {
+    margin: 0;
+    padding-left: 10px;
+    list-style: none;
+}
+
+.about-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.about-btn {
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.about-btn:hover {
+    background: #e9f5ff;
+}
+
+.custom-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}

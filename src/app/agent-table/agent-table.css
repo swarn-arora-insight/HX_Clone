@@ -1,0 +1,89 @@
+th:hover {
+    background-color: #f8f9fa;
+    transition: 0.2s;
+}
+
+input.form-control {
+    border-radius: 10px;
+}
+
+td {
+    color: #353131 !important;
+    font-size: medium;
+}
+
+.bi-star,
+.bi-star-fill {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.bi-star:hover,
+.bi-star-fill:hover {
+    transform: scale(1.2);
+}
+
+.about_col {
+    width: 80px !important;
+    max-width: 80px !important;
+    text-align: center;
+}
+
+.about_btn {
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-card {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    animation-duration: 0.4s;
+}
+
+.about-list {
+    margin: 0;
+    padding-left: 10px;
+    list-style: none;
+}
+
+.about-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.about-btn {
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.about-btn:hover {
+    background: #e9f5ff;
+}
+
+.custom-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.about-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.about-list .icon i {
+    line-height: 1;
+    margin-top: 2px;
+}

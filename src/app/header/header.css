@@ -1,0 +1,51 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.power-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #2E3D66;
+    color: white;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(113, 176, 217, 0.4);
+}
+
+.shot_btn {
+    background: #2E3D66;
+    color: white;
+    transition: all 0.3s ease;
+
+}
+
+.shot_btn:hover {
+    background: #0d6efd;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.35);
+}
+
+.power-btn:hover {
+    background: #0d6efd;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.35);
+}
+
+.dropdown-menu {
+    min-width: 110px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    font-weight: 600;
+    color: black !important;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f7fb;
+}

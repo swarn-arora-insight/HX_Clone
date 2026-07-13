@@ -1,0 +1,83 @@
+<div class="card  border-0 rounded-4 p-4 animate__animated animate__fadeInUp">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-primary mb-0">Agent Details ({{ selectedFilters?.extra_filter }})</h5>
+        <input type="text" class="form-control w-25 shadow-sm rounded-3" placeholder="Search..."
+            [(ngModel)]="searchTerm" />
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle mb-0 custom-table text-start">
+            <thead class="table-light">
+                <tr>
+                    <th class="fw-semibold text-secondary border-end text-start">Action</th>
+                    <th class="fw-semibold text-secondary border-end text-start about_col">
+                        About
+                    </th>
+                    <th *ngFor="let col of columns" (click)="sortBy(col)"
+                        class="fw-semibold text-secondary border-end text-start" style="cursor: pointer;">
+                        <div class="d-flex align-items-start justify-content-start">
+                            <span>{{ col }}</span>
+                            <i class="ms-2 sort-icon" [ngClass]="{
+                  'bi bi-arrow-up': sortKey === col && sortAsc,
+                  'bi bi-arrow-down': sortKey === col && !sortAsc,
+                  'bi bi-arrow-down-up text-muted': sortKey !== col
+                }"></i>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of filteredData; let i = index">
+                    <td class="align-middle text-center border-end" (click)="toggleAction(i)" style="cursor: pointer;">
+                        <i [ngClass]="{
+                'bi bi-star-fill text-warning': row.isSelected,
+                'bi bi-star text-secondary': !row.isSelected
+              }" style="font-size: 1.2rem;"
+                            [title]="row.isSelected ? 'Click to remove from shortlist' : 'Click to shortlist'"></i>
+                    </td>
+                    <td class="align-middle text-center border-end about_col">
+                        <button class="btn btn-light px-2 py-1 shadow-sm rounded-3" (click)="openAboutMe(row)"
+                            title="About User">
+                            <i class="bi bi-person-lines-fill text-primary"></i>
+                        </button>
+                    </td>
+                    <td *ngFor="let col of columns" class="align-middle border-end text-start">
+                        {{ row[col] }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- ABOUT ME POPUP -->
+<div class="custom-backdrop" *ngIf="showAboutPopup">
+    <div class="about-card animate__animated animate__fadeInDown">
+
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+            <h5 class="fw-bold text-primary mb-0">About {{aboutAgent.Name}}</h5>
+            <i class="bi bi-x-lg close-icon cursor-pointer" (click)="closeAboutMe()"></i>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="mt-3">
+            <h6 class="fw-semibold text-dark" *ngIf="aboutSummary.length > 0">Profile Summary</h6>
+
+            <ul class="about-list" *ngIf="aboutSummary.length > 0">
+                <li *ngFor="let point of aboutSummary">
+                    <span class="icon"><i class="bi bi-dot text-primary fs-4"></i></span>
+                    <span class="text">{{ point }}</span>
+                </li>
+            </ul>
+            <div *ngIf="aboutSummary.length === 0" class="text-center py-2">
+                <h5 class="fw-bold text-secondary mb-0">Profile Summary Not Found</h5>
+            </div>
+
+        </div>
+
+    </div>
+</div>

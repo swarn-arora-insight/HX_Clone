@@ -1,0 +1,67 @@
+/* BACKDROP */
+.custom-backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+}
+
+/* MAIN CARD GRADIENT */
+.popup-gradient {
+    background: linear-gradient(145deg, #f8fbfc, #ffffff);
+}
+
+/* HEADER */
+.popup-header {
+    background: linear-gradient(150deg, #ccd8f9, #d7def7);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* SCROLLABLE BODY */
+.popup-body-scroll {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+/* TABS */
+.custom-tab {
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.tab-active {
+    background: linear-gradient(150deg, #4f6dc0, #8798d8);
+    color: #fff;
+    border: 1px solid #e1e5ea !important;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+/* PREVIEW CONTENT */
+.sender-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-pre {
+    white-space: pre-line;
+}
+
+/* FOOTER */
+.popup-footer {
+    background: linear-gradient(150deg, #bfcffa, #d7def7);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Send button animation */
+.send-animate {
+    transition: 0.2s ease-in-out;
+}
+
+.send-animate:hover {
+    transform: scale(1.05);
+}
