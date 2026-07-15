@@ -18,7 +18,7 @@
     border-radius: 16px;
     background-color: #fff;
     transition: all 0.3s ease-in-out;
-    z-index: 100;
+    z-index: 9999;
 }
 
 .card:hover {
@@ -115,38 +115,6 @@
     transition: all 0.4s ease-in-out;
 }
 
-.text_agent {
-    color: #2E3D66;
-    cursor: pointer;
-}
-
-.custom-gap {
-    gap: 6rem !important;
-    /* or try 5rem for more space */
-}
-
-
-.count-box {
-    min-width: 200px;
-    height: 150px;
-    border: 1px solid #e0e0e0;
-    transition: all 0.3s ease;
-}
-
-.count-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(150deg, #f1f6ff, #bfd0fd);
-}
-
-
-.text_agent:hover {
-    color: #0D6EFD;
-    transition: all 0.4s ease-in-out;
-}
-
-
-
 .custom-select ::ng-deep .ng-select-container {
     border-radius: 10px !important;
 }
@@ -181,33 +149,7 @@
 }
 
 
-.count-row {
-    gap: 1.5rem;
-    flex-wrap: nowrap;
-}
-
-.count-box-wrapper {
-    min-width: 160px;
-    max-width: 100%;
-}
-
-@media (max-width: 992px) {
-    .count-row {
-        flex-wrap: wrap;
-    }
-
-    .count-box-wrapper {
-        flex: 1 1 45%;
-    }
-}
-
-@media (max-width: 576px) {
-    .count-box-wrapper {
-        flex: 1 1 100%;
-    }
-}
-
 .table {
-    position: fixed;
+    position: relative;
     z-index: 999;
 }

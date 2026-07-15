@@ -28,6 +28,13 @@ export class ApiService {
         );
     }
 
+    getFilterOptions<T>(name: string, q: string = '', limit: number = 100): Observable<T> {
+        const payload = { name, q, limit };
+        return this.http.post<T>(`${this.basePath}/filter/options`, payload).pipe(
+            catchError((err) => throwError(() => err))
+        );
+    }
+
     getShortlistCounts<T>(): Observable<T> {
         return this.http.post<T>(`${this.basePath}/shortlist_count`, {}).pipe(
             catchError((err) => throwError(() => err))
@@ -96,8 +103,15 @@ export class ApiService {
         );
     }
 
-    getAgentDetails<T>(selectedFilters: JSON): Observable<T> {
-        const payload = { selectedFilters };
+    getAgentDetails<T>(
+        selectedFilters: any,
+        page: number = 1,
+        page_size: number = 40,
+        search: string = '',
+        sort_by: string = '',
+        sort_dir: 'asc' | 'desc' = 'asc'
+    ): Observable<T> {
+        const payload = { selectedFilters, page, page_size, search, sort_by, sort_dir };
         return this.http.post<T>(`${this.basePath}/get/agents/details`, payload).pipe(
             catchError((err) => throwError(() => err))
         );

@@ -3,13 +3,66 @@ th:hover {
     transition: 0.2s;
 }
 
+.table-responsive thead th:hover {
+    --bs-table-bg: #dde5f2;
+    background-color: #dde5f2 !important;
+}
+
+.table-responsive {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Bootstrap 5.3 paints table-cell backgrounds via the --bs-table-bg /
+   --bs-table-accent-bg custom properties, which default to transparent;
+   pin both plus background-color to stay opaque under the sticky header. */
+.table-responsive thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    white-space: nowrap;
+    --bs-table-bg: #e9edf5;
+    --bs-table-accent-bg: #e9edf5;
+    background-color: #e9edf5 !important;
+    color: #2E3D66;
+    font-weight: 700;
+    border-bottom: 2px solid #b9c6e0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
 input.form-control {
     border-radius: 10px;
 }
 
+/* Rows that wrap to two lines are taller than the single-line sticky
+   header, so the header only masks its own height and the wrapped
+   line pokes out beneath it as the row scrolls past. Keeping rows
+   single-line (with horizontal scroll for overflow) avoids that. */
 td {
     color: #353131 !important;
     font-size: medium;
+    white-space: nowrap;
+}
+
+.expanded-row td {
+    white-space: normal;
+    word-break: break-word;
+    vertical-align: top;
+}
+
+.show-more-link {
+    display: inline-block;
+    margin-left: 4px;
+    color: #adb5bd;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.show-more-link:hover {
+    text-decoration: none;
 }
 
 .bi-star,
