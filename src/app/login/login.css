@@ -1,7 +1,9 @@
 .full-bg {
     min-height: 100vh;
-    background: linear-gradient(rgba(9, 24, 58, 0.48), rgba(21, 90, 126, 0.38)),
-        url('/hx/login_bg4.png') center/cover no-repeat;
+    /* background-image is set in login.html so the relative URL resolves against <base href> */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .login-card {
